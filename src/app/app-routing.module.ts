@@ -34,6 +34,38 @@ const routes: Routes = [
   {
     path: 'cursos',
     loadChildren: () => import('./cursos/cursos.module').then( m => m.CursosPageModule)
+  },
+  {
+    path: 'iniciar-sesion',
+    loadChildren: () => import('./iniciar-sesion/iniciar-sesion.module').then( m => m.IniciarSesionPageModule)
+  },
+  {
+    path: 'crear-cursos',
+    loadChildren: () => import('./crear-cursos/crear-cursos.module').then( m => m.CrearCursosPageModule)
+  },
+  {
+    path: 'crear-alumnos',
+    loadChildren: () => import('./crear-alumnos/crear-alumnos.module').then( m => m.CrearAlumnosPageModule)
+  },
+  {
+    path: 'crear-profesores',
+    loadChildren: () => import('./crear-profesores/crear-profesores.module').then( m => m.CrearProfesoresPageModule)
+  },
+  {
+    path: 'crear-niveles',
+    loadChildren: () => import('./crear-niveles/crear-niveles.module').then( m => m.CrearNivelesPageModule)
+  },
+  {
+    path: 'inicio-admin',
+    loadChildren: () => import('./inicio-admin/inicio-admin.module').then( m => m.InicioAdminPageModule)
+  },
+  {
+    path: 'crear-asignaturas',
+    loadChildren: () => import('./crear-asignaturas/crear-asignaturas.module').then( m => m.CrearAsignaturasPageModule)
+  },
+  {
+    path: 'crear-apoderado',
+    loadChildren: () => import('./crear-apoderado/crear-apoderado.module').then( m => m.CrearApoderadoPageModule)
   }
 ];
 
