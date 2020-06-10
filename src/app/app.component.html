@@ -4,9 +4,9 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>Agendapp</ion-list-header>
-          <ion-note>Liceo Abate Molina</ion-note>
+          <ion-note>Liceo de Cultura y Difusión artística de Talca</ion-note>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appAlumno; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
@@ -14,6 +14,14 @@
           </ion-menu-toggle>
         </ion-list>
 
+        <ion-list id="inbox-list">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appAdministrador; let i = index">
+            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
 <!--
         <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>

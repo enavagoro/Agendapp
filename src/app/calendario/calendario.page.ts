@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendario.page.scss'],
 })
 export class CalendarioPage implements OnInit {
+  hoy = new Date();
+  ultimoDia;
 
-  constructor() { }
+  constructor() {
+    console.log("Hora del día de hoy:",this.hoy);
+    console.log(this.hoy.getDay());
+  }
 
   ngOnInit() {
   }

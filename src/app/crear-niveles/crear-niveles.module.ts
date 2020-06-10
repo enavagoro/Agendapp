@@ -4,21 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CursosPageRoutingModule } from './cursos-routing.module';
+import { CrearNivelesPageRoutingModule } from './crear-niveles-routing.module';
 
-import { CursosPage } from './cursos.page';
+import { CrearNivelesPage } from './crear-niveles.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CursosPageRoutingModule
+    CrearNivelesPageRoutingModule
   ],
-  declarations: [CursosPage]
+  declarations: [CrearNivelesPage]
 })
-export class CursosPageModule {
-
-
-
-}
+export class CrearNivelesPageModule {}
