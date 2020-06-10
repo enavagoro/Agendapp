@@ -1,0 +1,36 @@
+ion-content{
+  --background: #f6f4fc;
+}
+
+ion-toolbar{
+  --background: #f6f4fc;
+  --opacity: 0.9;
+}
+
+.header-md::after{
+  width: 0% !important;
+}
+
+.contenedor-form{
+  border-top-left-radius: 30px !important;
+  border-top-right-radius: 30px !important;
+  background: white;
+  height: 100%;
+}
+
+.titulo-bienvenido{
+  padding-top: 20%;
+  font-size: 23px;
+  text-align: center;
+}
+
+.ion-button{
+  --background: #2bf8ce;
+  --background-activated:#2bf8ce;
+  --background-focused:#2bf8ce;
+  --background-hover:#2bf8ce;
+  width: 80% !important;
+  margin-left: 10% !important;
+  margin-top: 10%;
+  margin-bottom: 2%;
+}
