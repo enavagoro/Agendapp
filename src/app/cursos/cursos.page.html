@@ -1,9 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>cursos</ion-title>
+    <ion-title>Cursos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div>
+    <div class="cursos"*ngFor="let curso of cursos" >
+  
 
+        <div class="containerCard" *ngFor="let pagina of curso.paginas;let indice =index "><!-- 
+          <h1 class="titulo-manga">{{ manga.Titulo }}</h1>
+          <span class="nombre-autor" translate>{{ manga.autor }}</span>-->
+          <div class="card"(click)="pasoCursos(pagina);">
+            <h1>Nivel asdasdasds {{ indice +1 }}</h1>
+          </div> 
+          <ion-card-subtitle>
+          </ion-card-subtitle>
+        </div>
+
+    </div>
+  </div>
 </ion-content>

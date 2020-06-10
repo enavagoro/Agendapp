@@ -17,4 +17,8 @@ import { CursosPage } from './cursos.page';
   ],
   declarations: [CursosPage]
 })
-export class CursosPageModule {}
+export class CursosPageModule {
+
+
+
+}
