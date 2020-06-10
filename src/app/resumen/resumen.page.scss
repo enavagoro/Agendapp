@@ -4,15 +4,15 @@ ion-content{
 
 .titulo-bienvenido{
   font-size: 23px;
-  margin-left: 5%;
+  text-align: center;
 }
 
 .titulo-fecha{
-  font-size: 18px;
+  font-size: 16px;
   margin-top: 5%;
   text-align: right;
   margin-right: 5%;
-  color: #9a99a7;
+  color: #455a64;
   font-weight: 300;
 }
 
@@ -56,4 +56,8 @@ ion-content{
   margin-left: 5%;
   background: white;
   border-radius: 18px;
+}
+
+ion-avatar{
+  --border-radius: 0px;
 }
