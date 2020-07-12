@@ -1,0 +1,56 @@
+ion-content{
+  --background: #f6f4fc;
+}
+
+ion-title{
+  margin-top: 2.5%;
+}
+
+ion-toolbar{
+  --opacity: 0.9;
+  --background: #f6f4fc;
+}
+
+.header-md::after{
+  width: 0% !important;
+}
+
+ion-item{
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 10%;
+  border-radius: 5px;
+}
+
+ion-avatar{
+  --border-radius: 0px;
+}
+
+.mensaje-bienvenida{
+  width: 90%;
+  margin-top: 10%;
+  margin-left: 5%;
+  background: #f8e5e9;
+  border-radius: 20px;
+}
+
+.imagen-libreta{
+  width: 70%;
+  margin-left: 15%;
+}
+
+.contenedor-texto{
+  width: 80%;
+  margin-left: 10%;
+  font-size: 24px;
+  padding-bottom: 3%;
+}
+
+.titulo-bienvenida{
+  font-size: 20px;
+  color: #e76c77;
+}
+
+.texto-bienvenida{
+  font-size: 18px;
+}

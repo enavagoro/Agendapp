@@ -7,35 +7,108 @@
     </ion-buttons>
   </ion-toolbar>
 
-<div class="contenedor-form">
+  <div class="contenedor-form" *ngIf="banderaSituacion==0">
+    <h1 class="titulo-bienvenido" style="padding-top:10%;">Profesor</h1>
+
+    <ion-item style="padding-top:0%;" (click)="banderaSituacion=1">
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/875/875515.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Agregar Profesor</ion-label>
+    </ion-item>
+
+    <ion-list-header>
+      Lista de Profesores
+    </ion-list-header>
+
+    <div *ngFor="let p of profesores">
+      <ion-item (click)="opciones(p)">
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/906/906175.svg">
+        </ion-avatar>
+          <ion-label position="stacked">{{p.nombre}}</ion-label>
+      </ion-item>
+    </div>
+  </div>
+
+<div class="contenedor-form" *ngIf="banderaSituacion==1">
   <form>
-    <h1 class="titulo-bienvenido" style="margin-bottom:10%;">Agregar Profesor</h1>
+
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <h1 class="titulo-bienvenido" style="margin-bottom:1%;">Agregar Profesor</h1>
+
+    <ion-list-header>
+      Datos del Profesor
+    </ion-list-header>
 
     <ion-item>
       <ion-avatar slot="start">
-        <img src="https://image.flaticon.com/icons/svg/1602/1602619.svg">
+        <img src="https://image.flaticon.com/icons/svg/906/906175.svg">
       </ion-avatar>
-      <ion-label position="stacked">Nombre del Curso<ion-text color="danger">*</ion-text></ion-label>
+      <ion-label position="stacked">Nombre del Profesor<ion-text color="danger">*</ion-text></ion-label>
       <ion-input   name="nombre" required></ion-input>
     </ion-item>
-<!--[(ngModel)]="cliente.nombre" -->
+
     <ion-item>
       <ion-avatar slot="start">
-        <img src="https://image.flaticon.com/icons/svg/599/599210.svg">
+        <img src="https://image.flaticon.com/icons/svg/461/461786.svg">
       </ion-avatar>
-      <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
+      <ion-label position="stacked">Especialidad<ion-text color="danger">*</ion-text></ion-label>
       <ion-input name="rut" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-avatar slot="start">
-        <img src="https://image.flaticon.com/icons/svg/599/599210.svg">
+        <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
       </ion-avatar>
-      <ion-label position="stacked">Asignar Profesor<ion-text color="danger">*</ion-text></ion-label>
+      <ion-label position="stacked">Rut<ion-text color="danger">*</ion-text></ion-label>
       <ion-input name="rut" required></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/3003/3003732.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Dirección<ion-text color="danger">*</ion-text></ion-label>
+      <ion-input name="rut" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/2920/2920369.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Celular<ion-text color="danger">*</ion-text></ion-label>
+      <ion-input name="rut" required></ion-input>
+    </ion-item>
+
+    <ion-list-header>
+      Datos de la cuenta
+    </ion-list-header>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/3154/3154231.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Usuario<ion-text color="danger">*</ion-text></ion-label>
+      <ion-input name="nombre" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/3076/3076255.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Contraseña<ion-text color="danger">*</ion-text></ion-label>
+      <ion-input name="nombre" type="password" required></ion-input>
+    </ion-item>
+
    </form>
-
-    <ion-button class="ion-button">Agregar Alumno</ion-button>
+   <div style="background:white;">
+     <ion-button class="ion-button">Agregar Profesor</ion-button>
+   </div>
 </div>
 </ion-content>

@@ -1,24 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Cursos</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Cursos - Asignaturas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
   <div>
     <div class="cursos"*ngFor="let curso of cursos" >
-  
-
-        <div class="containerCard" *ngFor="let pagina of curso.paginas;let indice =index "><!-- 
-          <h1 class="titulo-manga">{{ manga.Titulo }}</h1>
-          <span class="nombre-autor" translate>{{ manga.autor }}</span>-->
-          <div class="card"(click)="pasoCursos(pagina);">
-            <h1>Nivel asdasdasds {{ indice +1 }}</h1>
-          </div> 
-          <ion-card-subtitle>
-          </ion-card-subtitle>
+      <div class="containerCard" *ngFor="let asignaturas of curso.asignaturas;let indice =index " (click)="abrirDetalle()">
+        <div class="card" (click)="pasoCursos(asignaturas);">
+          <ion-icon slot="end" name="notifications" style="margin-top:10%"></ion-icon>
+          <h1 style="color:#fa949d">{{asignaturas.nombre}}</h1>
+          <p>{{asignaturas.profesor}}</p>
+          <img class="imagen" src="https://image.flaticon.com/icons/svg/3043/3043869.svg">
         </div>
-
+      </div>
     </div>
   </div>
 </ion-content>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController ,ToastController, AlertController,ActionSheetController} from '@ionic/angular';
+import { DetallePage } from './detalle/detalle.page';
 
 @Component({
   selector: 'app-cursos',
@@ -9,31 +11,57 @@ export class CursosPage implements OnInit {
 
   cursos = [
     {
-      Titulo: '[Shingo.] #AltAccGirl',
-      autor: 'Artists: Mafuyu Hemp',
-      img:
-        'https://cdn.hentai.cafe/manga/content/comics/mafuyu-hemp-spring-storm-memento_5e479342ba823/1-0_5e4793477aeeb/02.jpg',
-      number: 1,
-      paginas: [
-        'https://cdn.hentai.cafe/manga/content/comics/shingo-altaccgirl_5d7bd363b081b/1-0_5d7bd3685ab3f/01.jpg',
-        'https://cdn.hentai.cafe/manga/content/comics/shingo-altaccgirl_5d7bd363b081b/1-0_5d7bd3685ab3f/02.jpg',
-        'https://cdn.hentai.cafe/manga/content/comics/shingo-altaccgirl_5d7bd363b081b/1-0_5d7bd3685ab3f/03.jpg',
-        'https://cdn.hentai.cafe/manga/content/comics/shingo-altaccgirl_5d7bd363b081b/1-0_5d7bd3685ab3f/04.jpg',
-        'https://cdn.hentai.cafe/manga/content/comics/shingo-altaccgirl_5d7bd363b081b/1-0_5d7bd3685ab3f/05.jpg'
-      ]
-    }
-  ];
+      Titulo: 'Asignaturas',
+      autor: 'administrador',
+      asignaturas: [{"nombre":"Matemáticas",
+                      "profesor":"Profesor 1"},
 
-  constructor() { 
-    
+                    {"nombre":"Lenguaje",
+                     "profesor":"Profesor 2"},
+
+                    {"nombre":"Historia",
+                     "profesor":"Profesor 3"},
+
+                    {"nombre":"Biología",
+                     "profesor":"Profesor 3"}]
+   }];
+
+  constructor(public actionSheetController: ActionSheetController,
+              private toastController : ToastController,
+              private alertController :AlertController,
+              private modalCtrl : ModalController) {
+
   }
 
 
   ngOnInit() {
   }
-  
-  pasoCursos(pagina){
-    console.log(pagina);
+
+  async abrirDetalle() {
+
+    const modal = await this.modalCtrl.create({
+      component: DetallePage,
+      cssClass: 'modals',
+/*
+      componentProps:{
+        'detalle' : this.detalle
+      }
+      */
+    });
+
+    modal.onDidDismiss().then(modal=>{
+      /*
+      if(modal.data){
+        console.log("detalle conseguido",modal.data);
+        this.detalle = modal.data;
+      }
+      */
+    });
+
+    return await modal.present();
+  }
+
+  pasoCursos(asignatura){
+    console.log(asignatura);
   }
 }
-

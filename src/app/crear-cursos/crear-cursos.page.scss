@@ -16,8 +16,24 @@ ion-toolbar{
   border-top-right-radius: 30px !important;
   background: white;
   height: 100%;
+  animation: aparecer 1s ease-out;
 }
 
+ion-badge{
+  padding-left: 3%;
+  padding-right: 3%;
+  margin: 2%;
+}
+
+@keyframes aparecer {
+  from{
+    transform: translateY(100%);
+  }
+
+  to{
+    transform: translateY(0%);
+  }
+}
 .titulo-bienvenido{
   padding-top: 20%;
   font-size: 23px;
@@ -33,4 +49,8 @@ ion-toolbar{
   margin-left: 10% !important;
   margin-top: 10%;
   margin-bottom: 2%;
+}
+
+ion-avatar{
+  --border-radius: 0%;
 }
