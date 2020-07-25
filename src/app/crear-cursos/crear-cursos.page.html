@@ -8,7 +8,6 @@
   </ion-toolbar>
 
   <div class="contenedor-form" *ngIf="banderaSituacion==0">
-
     <h1 class="titulo-bienvenido" style="padding-top:10%;">Cursos</h1>
 
     <ion-item style="padding-top:10%;" (click)="banderaSituacion=1">
@@ -23,15 +22,7 @@
     </ion-item>
 
     <div style="margin-left:10%; width:80%;">
-      <ion-badge color="tertiary" (click)="nivel=1;">1</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=2;">2</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=3;">3</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=4;">4</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=5;">5</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=6;">6</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=7;">7</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=8;">8</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=9;">9</ion-badge>
+      <ion-badge color="tertiary" *ngFor="let n of niveles" (click)="nivel=n.nivel">{{n.nivel}}</ion-badge>
     </div>
 
     <ion-list-header>
@@ -47,7 +38,7 @@
       </ion-item>
     </div>
 
-</div>
+  </div>
 
 <div class="contenedor-form" *ngIf="banderaSituacion==1">
   <form>
@@ -64,30 +55,26 @@
         <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
       </ion-avatar>
       <ion-label position="stacked">Codigo Curso<ion-text color="danger">*</ion-text></ion-label>
-      <ion-input name="nombre" required></ion-input>
+      <ion-input [(ngModel)]="curso.codigo" name="codigo" required></ion-input>
     </ion-item>
 <!--[(ngModel)]="cliente.nombre" -->
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="https://image.flaticon.com/icons/svg/610/610527.svg">
-      </ion-avatar>
-      <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
-      <ion-select cancelText="Cancelar" okText="Aceptar">
-        <ion-select-option value="1">1</ion-select-option>
-        <ion-select-option value="2">2</ion-select-option>
-        <ion-select-option value="3">3</ion-select-option>
-        <ion-select-option value="4">4</ion-select-option>
-        <ion-select-option value="5">5</ion-select-option>
-        <ion-select-option value="6">6</ion-select-option>
-      </ion-select>
-    </ion-item>
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://image.flaticon.com/icons/svg/610/610527.svg">
+    </ion-avatar>
+    <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
+    <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="curso.nivel">
+      <ion-select-option [value]="n.nivel" *ngFor="let n of niveles">{{n.nivel}}</ion-select-option>
+    </ion-select>
+  </ion-item>
 
     <ion-item>
       <ion-avatar slot="start">
         <img src="https://image.flaticon.com/icons/svg/779/779866.svg">
       </ion-avatar>
       <ion-label position="stacked">Nombre Curso<ion-text color="danger">*</ion-text></ion-label>
-      <ion-input name="rut" required></ion-input>
+      <ion-input [(ngModel)]="curso.nombre" name="nombre" required></ion-input>
     </ion-item>
 
     <ion-item>
@@ -95,13 +82,8 @@
         <img src="https://image.flaticon.com/icons/svg/3100/3100669.svg">
       </ion-avatar>
       <ion-label position="stacked">Asignaturas<ion-text color="danger">*</ion-text></ion-label>
-      <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar">
-        <ion-select-option value="1">Matemática</ion-select-option>
-        <ion-select-option value="2">Lenguaje</ion-select-option>
-        <ion-select-option value="3">Naturaleza</ion-select-option>
-        <ion-select-option value="4">Biología</ion-select-option>
-        <ion-select-option value="5">Física</ion-select-option>
-        <ion-select-option value="6">Química</ion-select-option>
+      <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar" name="asignaturas" [(ngModel)]="curso.asignaturas">
+        <ion-select-option [value]="a" *ngFor="let a of asignaturas">{{a.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -110,20 +92,136 @@
         <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
       </ion-avatar>
       <ion-label position="stacked">Alumnos<ion-text color="danger">*</ion-text></ion-label>
-      <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar">
-        <ion-select-option value="1">Juan Perez</ion-select-option>
-        <ion-select-option value="2">Juan Solo</ion-select-option>
-        <ion-select-option value="3">Juan Valdés</ion-select-option>
-        <ion-select-option value="4">Juan Alberto</ion-select-option>
-        <ion-select-option value="5">Juan Valdebenito</ion-select-option>
-        <ion-select-option value="6">Juan José</ion-select-option>
+      <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar" name="alumnos" [(ngModel)]="curso.alumnos">
+        <ion-select-option [value]="a" *ngFor="let a of alumnos">{{a.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
    </form>
 
    <div style="background:white;">
-     <ion-button class="ion-button">Agregar</ion-button>
+     <ion-button class="ion-button" (click)="guardarCurso();">Agregar Curso</ion-button>
    </div>
 </div>
 
+<div class="contenedor-form" *ngIf="banderaSituacion==2">
+  <form>
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <h1 class="titulo-bienvenido" style="padding-top:0%;">Actualizar Curso</h1>
+
+    <ion-item style="margin-top: 20%;">
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Codigo Curso<ion-text color="danger">*</ion-text></ion-label>
+      <ion-input [(ngModel)]="curso.codigo" name="codigo" required></ion-input>
+    </ion-item>
+<!--[(ngModel)]="cliente.nombre" -->
+
+<ion-item>
+  <ion-avatar slot="start">
+    <img src="https://image.flaticon.com/icons/svg/610/610527.svg">
+  </ion-avatar>
+  <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
+  <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="curso.nivel">
+    <ion-select-option [value]="n.nivel" *ngFor="let n of niveles">{{n.nivel}}</ion-select-option>
+  </ion-select>
+</ion-item>
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://image.flaticon.com/icons/svg/779/779866.svg">
+    </ion-avatar>
+    <ion-label position="stacked">Nombre Curso<ion-text color="danger">*</ion-text></ion-label>
+    <ion-input [(ngModel)]="curso.nombre" name="nombre" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://image.flaticon.com/icons/svg/3100/3100669.svg">
+    </ion-avatar>
+    <ion-label position="stacked">Asignaturas<ion-text color="danger">*</ion-text></ion-label>
+    <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar" name="asignaturas" [(ngModel)]="curso.asignaturas">
+      <ion-select-option [value]="a" *ngFor="let a of asignaturas">{{a.nombre}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+    </ion-avatar>
+    <ion-label position="stacked">Alumnos<ion-text color="danger">*</ion-text></ion-label>
+    <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar" name="alumnos" [(ngModel)]="curso.alumnos">
+      <ion-select-option [value]="a" *ngFor="let a of alumnos">{{a.nombre}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+   </form>
+
+   <div style="background:white;">
+     <ion-button class="ion-button" (click)="actualizarCurso();">Actualizar Curso</ion-button>
+   </div>
+</div>
+
+<div class="contenedor-form" *ngIf="banderaSituacion==3">
+  <form>
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <h1 class="titulo-bienvenido" style="padding-top:0%;">Curso</h1>
+
+    <ion-item style="margin-top: 20%;">
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Codigo Curso<ion-text color="danger">*</ion-text></ion-label>
+      <h1 class="titulo-ver">{{curso.codigo}}</h1>
+    </ion-item>
+<!--[(ngModel)]="cliente.nombre" -->
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://image.flaticon.com/icons/svg/610/610527.svg">
+    </ion-avatar>
+    <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
+    <h1 class="titulo-ver">{{curso.nivel}}</h1>
+  </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/779/779866.svg">
+      </ion-avatar>
+      <ion-label position="stacked">Nombre Curso<ion-text color="danger">*</ion-text></ion-label>
+      <h1 class="titulo-ver">{{curso.nombre}}</h1>
+    </ion-item>
+
+    <ion-list-header>
+      Asignaturas
+    </ion-list-header>
+
+    <ion-item lines="none" *ngFor="let asignatura of curso.asignaturas">
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+      </ion-avatar>
+      <ion-label position="stacked">{{asignatura.nombre}}<ion-text color="danger">*</ion-text></ion-label>
+    </ion-item>
+
+    <ion-list-header>
+      Alumnos
+    </ion-list-header>
+
+    <ion-item lines="none" *ngFor="let alumno of curso.alumnos">
+      <ion-avatar slot="start">
+        <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+      </ion-avatar>
+      <ion-label position="stacked">{{alumno.nombre}}<ion-text color="danger">*</ion-text></ion-label>
+    </ion-item>
+   </form>
+</div>
 </ion-content>

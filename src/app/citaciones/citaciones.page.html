@@ -1,9 +1,201 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>citaciones</ion-title>
+<ion-content *ngIf="banderaUsuario==1">
+    <ion-toolbar class="toolbar">
+      <ion-buttons slot="start">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-buttons>
+      <ion-title>Citaciones</ion-title>
+    </ion-toolbar>
+
+
+    <div class="cursos">
+      <div class="containerCard" *ngFor="let c of citaciones" (click)="abrirDetalle(c)">
+        <div class="card">
+          <ion-icon slot="end" name="notifications" style="margin-top:10%"></ion-icon>
+          <h1 style="color:#fa949d">{{c.titulo}}</h1>
+          <img class="imagen" src="https://image.flaticon.com/icons/svg/3043/3043869.svg">
+        </div>
+      </div>
+    </div>
+</ion-content>
+
+<ion-content *ngIf="banderaUsuario==2">
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
 
-<ion-content>
+  <div class="contenedor-form" *ngIf="banderaSituacion==0">
+    <h1 class="titulo-bienvenido" style="padding-top:10%;">Citaciones</h1>
 
+    <div class="card-calendario" style="padding-top:10%;">
+      <ion-item lines="none" (click)="banderaSituacion=1">
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/875/875515.svg">
+        </ion-avatar>
+        <ion-label>
+          <h3>Agregar Citacion</h3>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <ion-list-header>
+      Lista de Citaciones
+    </ion-list-header>
+
+    <div *ngFor="let c of citaciones">
+      <ion-item (click)="opciones(c)">
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/3074/3074035.svg">
+          </ion-avatar>
+          <ion-label position="stacked">{{c.titulo}}</ion-label>
+      </ion-item>
+    </div>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==1">
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Agregar Citacion</h1>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3074/3074035.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Titulo<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="citacion.titulo" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Descripcion<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="citacion.descripcion" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+        </ion-avatar>
+        <ion-label>Fecha de Citacion</ion-label>
+        <ion-datetime placeholder="Select Date" name="fecha" [(ngModel)]="citacion.fecha" required></ion-datetime>
+      </ion-item>
+     </form>
+
+     <ion-item>
+       <ion-avatar slot="start">
+         <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+       </ion-avatar>
+       <ion-label position="stacked">Alumno<ion-text color="danger">*</ion-text></ion-label>
+       <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="citacion.alumno">
+         <ion-select-option [value]="a.nombre" *ngFor="let a of alumnos">{{a.nombre}}</ion-select-option>
+       </ion-select>
+     </ion-item>
+
+    <ion-button class="ion-button" (click)="guardarCitacion();">Agregar Citacion</ion-button>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==2">
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Agregar Citacion</h1>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3074/3074035.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Titulo<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="citacion.titulo" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Descripcion<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="citacion.descripcion" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+        </ion-avatar>
+        <ion-label>Fecha de Citacion</ion-label>
+        <ion-datetime placeholder="Select Date" name="fecha" [(ngModel)]="citacion.fecha" required></ion-datetime>
+      </ion-item>
+     </form>
+
+     <ion-item>
+       <ion-avatar slot="start">
+         <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+       </ion-avatar>
+       <ion-label position="stacked">Alumno<ion-text color="danger">*</ion-text></ion-label>
+       <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="citacion.alumno">
+         <ion-select-option [value]="a.nombre" *ngFor="let a of alumnos">{{a.nombre}}</ion-select-option>
+       </ion-select>
+     </ion-item>
+
+    <ion-button class="ion-button" (click)="actualizarCitacion();">Actualizar Citacion</ion-button>
+  </div>
+
+    <div class="contenedor-form" *ngIf="banderaSituacion==3">
+
+          <ion-buttons style="padding-top:8%;">
+            <ion-button (click)="banderaSituacion=0;limpiarDatos()">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+          <form>
+            <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Ver Citacion</h1>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="https://image.flaticon.com/icons/svg/3074/3074035.svg">
+              </ion-avatar>
+              <ion-label position="stacked">Titulo<ion-text color="danger">*</ion-text></ion-label>
+              <ion-label position="stacked">{{citacion.titulo}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+              </ion-avatar>
+              <ion-label position="stacked">Descripcion<ion-text color="danger">*</ion-text></ion-label>
+              <ion-label position="stacked">{{citacion.descripcion}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+              </ion-avatar>
+              <ion-label position="stacked">Fecha<ion-text color="danger">*</ion-text></ion-label>
+              <ion-label position="stacked">{{citacion.fecha}}</ion-label>
+            </ion-item>
+
+
+           <ion-item>
+             <ion-avatar slot="start">
+               <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+             </ion-avatar>
+             <ion-label position="stacked">Alumno<ion-text color="danger">*</ion-text></ion-label>
+             <ion-label position="stacked">{{citacion.alumno}}</ion-label>
+           </ion-item>
+           </form>
+    </div>
 </ion-content>

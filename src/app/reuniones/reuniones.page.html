@@ -1,9 +1,173 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>reuniones</ion-title>
+<ion-content *ngIf="banderaUsuario==1">
+  <ion-header>
+    <ion-toolbar class="toolbar">
+      <ion-buttons slot="start">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-buttons>
+      <ion-title>Reuniones</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+    <div class="cursos">
+      <div class="containerCard" *ngFor="let r of reuniones" (click)="abrirDetalle(r)">
+        <div class="card">
+          <ion-icon slot="end" name="notifications" style="margin-top:10%"></ion-icon>
+          <h1 style="color:#fa949d">{{r.titulo}}</h1>
+          <img class="imagen" src="https://image.flaticon.com/icons/svg/3043/3043869.svg">
+        </div>
+      </div>
+    </div>
+</ion-content>
+
+<ion-content *ngIf="banderaUsuario==2">
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
 
-<ion-content>
+  <div class="contenedor-form" *ngIf="banderaSituacion==0">
+    <h1 class="titulo-bienvenido" style="padding-top:10%;">Reuniones</h1>
 
+    <div class="card-calendario" style="padding-top:10%;">
+      <ion-item lines="none" (click)="banderaSituacion=1">
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/875/875515.svg">
+        </ion-avatar>
+        <ion-label>
+          <h3>Agregar Reunión</h3>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <ion-list-header>
+      Lista de Reuniones
+    </ion-list-header>
+
+    <div *ngFor="let r of reuniones">
+      <ion-item (click)="opciones(r)">
+          <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3176/3176395.svg">
+          </ion-avatar>
+          <ion-label position="stacked">{{r.titulo}}</ion-label>
+      </ion-item>
+    </div>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==1">
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Agregar Reunión</h1>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3176/3176395.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Titulo<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="reunion.titulo" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Descripcion<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="reunion.descripcion" name="descipcion" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+        </ion-avatar>
+        <ion-label>Fecha de Reunion</ion-label>
+        <ion-datetime placeholder="Select Date" name="fecha" [(ngModel)]="reunion.fecha" required></ion-datetime>
+      </ion-item>
+     </form>
+
+    <ion-button class="ion-button" (click)="guardarReunion();">Agregar Reunión</ion-button>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==2">
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Agregar Reunión</h1>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3176/3176395.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Titulo<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="reunion.titulo" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Descripcion<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="reunion.descripcion" name="descipcion" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+        </ion-avatar>
+        <ion-label>Fecha de Reunion</ion-label>
+        <ion-datetime placeholder="Select Date" name="fecha" [(ngModel)]="reunion.fecha" required></ion-datetime>
+      </ion-item>
+     </form>
+
+    <ion-button class="ion-button" (click)="actualizarReunion();">Actualizar Reunión</ion-button>
+  </div>
+
+    <div class="contenedor-form" *ngIf="banderaSituacion==3">
+
+          <ion-buttons style="padding-top:8%;">
+            <ion-button (click)="banderaSituacion=0;limpiarDatos()">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+          <form>
+            <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Ver Reunión</h1>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="https://image.flaticon.com/icons/svg/3176/3176395.svg">
+              </ion-avatar>
+              <ion-label position="stacked">Titulo<ion-text color="danger">*</ion-text></ion-label>
+              <ion-label position="stacked">{{reunion.titulo}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+              </ion-avatar>
+              <ion-label position="stacked">Descripcion<ion-text color="danger">*</ion-text></ion-label>
+              <ion-label position="stacked">{{reunion.descripcion}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+              </ion-avatar>
+              <ion-label>Fecha de Reunion</ion-label>
+              <ion-label position="stacked">{{reunion.fecha}}</ion-label>
+            </ion-item>
+           </form>
+    </div>
 </ion-content>

@@ -11,6 +11,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
+  public banderaUsuario = 3;
+
   public appAlumno = [
     {
       title: 'Inicio',
@@ -18,7 +20,7 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'Cursos',
+      title: 'Tareas',
       url: 'cursos',
       icon: 'library'
     },
@@ -31,12 +33,44 @@ export class AppComponent implements OnInit {
       title: 'Citaciones',
       url: 'citaciones',
       icon: 'clipboard'
-    },
+    }
+    /*,
     {
       title: 'Calendario',
       url: 'calendario',
       icon: 'calendar'
     }
+    */
+  ];
+
+  public appProfesor = [
+    {
+      title: 'Inicio',
+      url: 'resumen',
+      icon: 'home'
+    },
+    {
+      title: 'Tareas',
+      url: 'cursos',
+      icon: 'library'
+    },
+    {
+      title: 'Reuniones',
+      url: 'reuniones',
+      icon: 'people'
+    },
+    {
+      title: 'Citaciones',
+      url: 'citaciones',
+      icon: 'clipboard'
+    }
+    /*,
+    {
+      title: 'Calendario',
+      url: 'calendario',
+      icon: 'calendar'
+    }
+    */
   ];
 
   public appAdministrador = [

@@ -2,10 +2,9 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
+        <ion-list id="inbox-list" *ngIf="banderaUsuario==1">
           <ion-list-header>Agendapp</ion-list-header>
           <ion-note>Liceo de Ejemplo</ion-note>
-          <p>Nombre de alumno de ejemplo</p>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appAlumno; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
@@ -19,13 +18,36 @@
           </ion-item>
         </ion-list>
 
-        <ion-list id="inbox-list">
+        <ion-list id="inbox-list" *ngIf="banderaUsuario==2">
+          <ion-list-header>Agendapp</ion-list-header>
+          <ion-note>Profesor de Ejemplo</ion-note>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appProfesor; let i = index">
+            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="power-outline"></ion-icon>
+            <ion-label>Cerrar Sesión</ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-list id="inbox-list" *ngIf="banderaUsuario==3">
+          <ion-list-header>Agendapp</ion-list-header>
+          <ion-note>Administrador de Ejemplo</ion-note>
+
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appAdministrador; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="power-outline"></ion-icon>
+            <ion-label>Cerrar Sesión</ion-label>
+          </ion-item>
         </ion-list>
 
       </ion-content>

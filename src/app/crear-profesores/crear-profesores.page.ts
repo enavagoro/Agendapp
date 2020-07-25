@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController ,ToastController,AlertController,ActionSheetController} from '@ionic/angular';
+import { ProfesorService } from '../_servicios/profesor.service';
 
 @Component({
   selector: 'app-crear-profesores',
@@ -9,38 +10,32 @@ import { ModalController ,ToastController,AlertController,ActionSheetController}
 export class CrearProfesoresPage implements OnInit {
   banderaSituacion = 0;
 
-  profesor = {
-                "id":"0","estado":"0","nombre":"Juan","rut":"123123"
-              };
+  public profesor  = {id:0,estado:false,nombre:'',rut:''};
+  nivel;
 
-
-
-  profesores = [{
-                  "id":"0","estado":"0","nombre":"Juan","rut":"123123"
-                },
-                {
-                  "id":"0","estado":"0","nombre":"Pedro","rut":"123123"
-                },
-                {
-                  "id":"0","estado":"0","nombre":"Miguel","rut":"123123"
-                },
-                {
-                  "id":"0","estado":"0","nombre":"Raul","rut":"123123"
-                },
-                {
-                  "id":"0","estado":"0","nombre":"José","rut":"123123"
-                }
-               ];
+  profesores = [];
 
   constructor( private toastController : ToastController,
                private alertController :AlertController,
                private modalCtrl : ModalController,
-               public actionSheetController: ActionSheetController,) { }
+               public actionSheetController: ActionSheetController,
+               private profesorService : ProfesorService) {
+
+                console.log(this.profesores);
+
+                this.profesorService.listar().subscribe(p=>{
+                  this.profesores = p;
+                  console.log(this.profesores);
+                       // this.profesorService = t.filter(this.filtros);
+                })
+
+
+                }
 
   ngOnInit() {
   }
 
-  async opciones(curso) {
+  async opciones(profesor) {
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Opciones',
@@ -48,13 +43,15 @@ export class CrearProfesoresPage implements OnInit {
         text: 'Ver',
         icon: 'eye',
         handler: () => {
-
+          this.profesor = profesor;
+          this.banderaSituacion=3;
         }
       },{
-        text: 'Editar',
-        icon: 'people',
+        text: 'Actualizar',
+        icon: 'albums',
         handler: () => {
-
+          this.profesor = profesor;
+          this.banderaSituacion=2;
         }
       }, {
         text: 'Desactivar',
@@ -73,5 +70,30 @@ export class CrearProfesoresPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  public guardarProfesor(){
+
+    this.profesor.id = 0 + (this.profesores.length + 1);
+    this.profesorService.insertar(this.profesor).subscribe(profesor=>{
+      //console.log('entra2');
+      this.ngOnInit();
+      this.profesor = {id:0,estado:false,nombre:'',rut:''};
+    })
+  }
+
+  public actualizarProfesor(){
+    console.log('vamos a actualizar a este profesor',this.profesor);
+
+    this.profesorService.actualizar(this.profesor.id,this.profesor).subscribe(profesor=>{
+      //console.log(cliente);
+      this.ngOnInit();
+      this.profesor = {id:0,estado:false,nombre:'',rut:''};
+    })
+  }
+
+  limpiarDatos(){
+    this.ngOnInit();
+    this.profesor = {id:0,estado:false,nombre:'',rut:''};
   }
 }

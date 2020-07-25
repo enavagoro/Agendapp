@@ -52,3 +52,47 @@ ion-toolbar{
     width: 40%;
     margin-left: 0%;
   }
+
+  .contenedor-form{
+    border-top-left-radius: 30px !important;
+    border-top-right-radius: 30px !important;
+    background: white;
+    height: 100%;
+    animation: aparecer 1s ease-out;
+  }
+
+  ion-badge{
+    padding-left: 3%;
+    padding-right: 3%;
+    margin: 2%;
+  }
+
+  @keyframes aparecer {
+    from{
+      transform: translateY(100%);
+    }
+
+    to{
+      transform: translateY(0%);
+    }
+  }
+  .titulo-bienvenido{
+    padding-top: 5%;
+    font-size: 23px;
+    text-align: center;
+  }
+
+  .ion-button{
+    --background: #2bf8ce;
+    --background-activated:#2bf8ce;
+    --background-focused:#2bf8ce;
+    --background-hover:#2bf8ce;
+    width: 80% !important;
+    margin-left: 10% !important;
+    margin-top: 10%;
+    margin-bottom: 2%;
+  }
+
+  ion-avatar{
+    --border-radius: 0%;
+  }

@@ -1,20 +1,201 @@
-<ion-content>
+<ion-content *ngIf="banderaUsuario==1">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Cursos - Asignaturas</ion-title>
+    <ion-toolbar class="toolbar">
+      <ion-buttons slot="start">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-buttons>
+      <ion-title>Tareas</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div>
-    <div class="cursos"*ngFor="let curso of cursos" >
-      <div class="containerCard" *ngFor="let asignaturas of curso.asignaturas;let indice =index " (click)="abrirDetalle()">
-        <div class="card" (click)="pasoCursos(asignaturas);">
+    <div class="cursos">
+      <div class="containerCard" *ngFor="let t of tareasFiltradas" (click)="abrirDetalle(t)">
+        <div class="card">
           <ion-icon slot="end" name="notifications" style="margin-top:10%"></ion-icon>
-          <h1 style="color:#fa949d">{{asignaturas.nombre}}</h1>
-          <p>{{asignaturas.profesor}}</p>
+          <h1 style="color:#fa949d">{{t.titulo}}</h1>
+          <p>{{profesor.nombre}}</p>
           <img class="imagen" src="https://image.flaticon.com/icons/svg/3043/3043869.svg">
         </div>
       </div>
     </div>
+</ion-content>
+
+<ion-content *ngIf="banderaUsuario==2">
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==0">
+    <h1 class="titulo-bienvenido" style="padding-top:10%;">Tareas</h1>
+
+    <div class="card-calendario" style="padding-top:10%;">
+      <ion-item lines="none" (click)="banderaSituacion=1">
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/875/875515.svg">
+        </ion-avatar>
+        <ion-label>
+          <h3>Agregar Tareas</h3>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <ion-list-header>
+      Lista de Tareas
+    </ion-list-header>
+
+    <div *ngFor="let t of tareas">
+      <ion-item (click)="opciones(t)">
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/2972/2972085.svg">
+          </ion-avatar>
+          <ion-label position="stacked">{{t.titulo}}</ion-label>
+      </ion-item>
+    </div>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==1">
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Agregar Tarea</h1>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/2972/2972085.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Titulo de la Tarea<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="tarea.titulo" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Descripcion de la Tarea<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="tarea.descripcion" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+        </ion-avatar>
+        <ion-label>Fecha de la Tarea</ion-label>
+        <ion-datetime placeholder="Select Date" name="fecha" [(ngModel)]="tarea.fecha" required></ion-datetime>
+      </ion-item>
+     </form>
+
+     <ion-item>
+       <ion-avatar slot="start">
+         <img src="https://image.flaticon.com/icons/svg/3100/3100669.svg">
+       </ion-avatar>
+       <ion-label position="stacked">Asignatura <ion-text color="danger">*</ion-text></ion-label>
+       <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="tarea.asignatura">
+         <ion-select-option [value]="a" *ngFor="let a of asignaturasFiltradas">{{a.nombre}}</ion-select-option>
+       </ion-select>
+     </ion-item>
+
+    <ion-button class="ion-button" (click)="guardarTarea();">Agregar Tarea</ion-button>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==2">
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Agregar Tarea</h1>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/2972/2972085.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Titulo de la Tarea<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="tarea.titulo" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Descripcion de la Tarea<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="tarea.descripcion" name="titulo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+        </ion-avatar>
+        <ion-label>Fecha de la Tarea</ion-label>
+        <ion-datetime placeholder="Select Date" name="fecha" [(ngModel)]="tarea.fecha" required></ion-datetime>
+      </ion-item>
+     </form>
+
+     <ion-item>
+       <ion-avatar slot="start">
+         <img src="https://image.flaticon.com/icons/svg/3100/3100669.svg">
+       </ion-avatar>
+       <ion-label position="stacked">Asignatura <ion-text color="danger">*</ion-text></ion-label>
+       <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="tarea.asignatura">
+         <ion-select-option [value]="a" *ngFor="let a of asignaturasFiltradas">{{a.nombre}}</ion-select-option>
+       </ion-select>
+     </ion-item>
+
+    <ion-button class="ion-button" (click)="actualizarTarea();">Actualizar Tarea</ion-button>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==3">
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:5%;">Ver Tarea</h1>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/2972/2972085.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Titulo de la Tarea<ion-text color="danger">*</ion-text></ion-label>
+        <ion-label position="stacked">{{tarea.titulo}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Descripcion de la Tarea<ion-text color="danger">*</ion-text></ion-label>
+        <ion-label position="stacked">{{tarea.descripcion}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/470/470326.svg">
+        </ion-avatar>
+        <ion-label>Fecha de la Tarea</ion-label>
+        <ion-label position="stacked">{{tarea.fecha}}</ion-label>
+      </ion-item>
+     </form>
+
+     <ion-item>
+       <ion-avatar slot="start">
+         <img src="https://image.flaticon.com/icons/svg/3100/3100669.svg">
+       </ion-avatar>
+       <ion-label position="stacked">Asignatura <ion-text color="danger">*</ion-text></ion-label>
+        <ion-label position="stacked">{{tarea.asignatura}}</ion-label>
+     </ion-item>
   </div>
 </ion-content>

@@ -1,58 +1,35 @@
 <ion-content>
     <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="cerrarModal()">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
       <ion-title>Tareas</ion-title>
     </ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="cerrarModal()">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
 
   <div class="mensaje-bienvenida">
     <img class="imagen-libreta" src="./assets/icon/profesor.svg">
     <div class="contenedor-texto">
-      <h1 class="titulo-bienvenida">Matemáticas</h1>
-      <h1 class="texto-bienvenida">Profesor 1</h1>
+      <h1 class="titulo-bienvenida">{{asignatura.nombre}}</h1>
     </div>
   </div>
 
-  <ion-item lines="none" (click)="abrirTarea()">
-    <ion-avatar slot="start">
-      <img src="https://image.flaticon.com/icons/svg/716/716179.svg">
-    </ion-avatar>
-
-    <ion-label>Ecuación general de la recta</ion-label>
-  </ion-item>
-
   <ion-item lines="none">
     <ion-avatar slot="start">
       <img src="https://image.flaticon.com/icons/svg/716/716179.svg">
     </ion-avatar>
 
-    <ion-label>Guía de ejercicios 1</ion-label>
+    <ion-label>{{tarea.titulo}}</ion-label>
   </ion-item>
 
-  <ion-item lines="none">
-    <ion-avatar slot="start">
-      <img src="https://image.flaticon.com/icons/svg/716/716179.svg">
-    </ion-avatar>
-
-    <ion-label>Ecuación principal de la recta</ion-label>
+  <ion-item>
+    <p>{{tarea.descripcion}}</p>
   </ion-item>
 
-  <ion-item lines="none">
-    <ion-avatar slot="start">
-      <img src="https://image.flaticon.com/icons/svg/716/716179.svg">
-    </ion-avatar>
 
-    <ion-label>Guía de ejercicios 2</ion-label>
-  </ion-item>
 
   <ion-item lines="none">
-    <ion-avatar slot="start">
-      <img src="https://image.flaticon.com/icons/svg/716/716179.svg">
-    </ion-avatar>
-
-    <ion-label>Guía de ejercicios 3</ion-label>
+    <ion-button class="ion-button">Enviar Duda</ion-button>
   </ion-item>
 </ion-content>

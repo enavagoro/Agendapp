@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController ,ToastController,AlertController,ActionSheetController} from '@ionic/angular';
+import { NivelService } from '../_servicios/nivel.service';
 
 @Component({
   selector: 'app-crear-niveles',
@@ -8,28 +9,22 @@ import { ModalController ,ToastController,AlertController,ActionSheetController}
 })
 export class CrearNivelesPage implements OnInit {
 
-
-  nivel= {
-            "id":"0","cod_nivel":"0","estado":"0","nivel":"1"
-          };
-
-  niveles = [{
-              "id":"0","cod_nivel":"0","estado":"0","nivel":"1"
-            },
-            {
-              "id":"0","cod_nivel":"0","estado":"0","nivel":"2"
-            },
-            {
-              "id":"0","cod_nivel":"0","estado":"0","nivel":"3"
-            }
-           ];
-
   banderaSituacion = 0;
+
+  public nivel = {id:0,codigo:'',estado:false,nivel:0};
+  niveles = [];
 
   constructor( private toastController : ToastController,
                private alertController :AlertController,
                private modalCtrl : ModalController,
-               public actionSheetController: ActionSheetController,) { }
+               public actionSheetController: ActionSheetController,
+               private nivelService : NivelService) {
+                 this.nivelService.listar().subscribe(a=>{
+                   this.niveles = a;
+                   console.log(this.niveles);
+                      // this.nivelService = t.filter(this.filtros);
+                 })
+                }
 
   ngOnInit() {
   }
@@ -42,19 +37,15 @@ export class CrearNivelesPage implements OnInit {
         text: 'Ver',
         icon: 'eye',
         handler: () => {
-
+          this.nivel = nivel;
+          this.banderaSituacion=3;
         }
       },{
-        text: 'Modificar Asignaturas',
+        text: 'Actualizar',
         icon: 'albums',
         handler: () => {
-
-        }
-      },{
-        text: 'Agregar Alumno',
-        icon: 'people',
-        handler: () => {
-
+          this.nivel = nivel;
+          this.banderaSituacion=2;
         }
       }, {
         text: 'Desactivar',
@@ -73,5 +64,30 @@ export class CrearNivelesPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  public guardarNivel(){
+
+    this.nivel.id = 0 + (this.niveles.length + 1);
+    this.nivelService.insertar(this.nivel).subscribe(nivel=>{
+      //console.log('entra2');
+      this.ngOnInit();
+      this.nivel = {id:0,codigo:'',estado:false,nivel:0};;
+    })
+  }
+
+  public actualizarNivel(){
+    console.log('vamos a actualizar a este nivel',this.nivel);
+
+    this.nivelService.actualizar(this.nivel.id,this.nivel).subscribe(nivel=>{
+      //console.log(cliente);
+      this.ngOnInit();
+      this.nivel = {id:0,codigo:'',estado:false,nivel:0};;
+    })
+  }
+
+  limpiarDatos(){
+    this.ngOnInit();
+    this.nivel = {id:0,codigo:'',estado:false,nivel:0};;
   }
 }

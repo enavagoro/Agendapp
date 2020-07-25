@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController ,ToastController,AlertController,ActionSheetController} from '@ionic/angular';
+import { AsignaturaService } from '../_servicios/asignatura.service';
+import { NivelService } from '../_servicios/nivel.service';
+import { ProfesorService } from '../_servicios/profesor.service';
 
 @Component({
   selector: 'app-crear-asignaturas',
@@ -11,29 +14,46 @@ export class CrearAsignaturasPage implements OnInit {
 
   banderaSituacion = 0;
 
-  nivel = 1;
+  public asignatura  = {id:0,estado:false,codigo:'',nivel:0,nombre:'',profesor:'',tareas:[]};
 
-  asignatura = {
-                  "id":"0","estado":"0","cod_asignatura":"1","nivel":"0","nombre":"Juan"
-                };
+  asignaturas = [];
+  profesores = [];
+  public profesor  = {id:0,estado:false,nombre:'',rut:''};
 
-  asignaturas = [{
-                  "id":"0","estado":"0","cod_asignatura":"2","nivel":"1","nombre":"Pedro"
-                },
-                {
-                  "id":"0","estado":"0","cod_asignatura":"3","nivel":"1","nombre":"Juan"
-                },
-                {
-                  "id":"0","estado":"0","cod_asignatura":"4","nivel":"2","nombre":"Diego"
-                },
-              ];
+  niveles = [];
 
   constructor( private toastController : ToastController,
                private alertController :AlertController,
                private modalCtrl : ModalController,
-               public actionSheetController: ActionSheetController,) { }
+               public actionSheetController: ActionSheetController,
+               public asignaturaService: AsignaturaService,
+               public nivelService : NivelService,
+               public profesorService : ProfesorService) {
+                 console.log(this.asignaturas);
+
+                  this.asignaturaService.listar().subscribe(a=>{
+                    console.log(a);
+                    this.asignaturas = a;
+                    console.log(this.asignaturas);
+                       // this.asignaturaService = t.filter(this.filtros);
+                  })
+
+                  this.nivelService.listar().subscribe(n=>{
+                     this.niveles = n;
+                     console.log(this.niveles);
+                       // this.nivelService = t.filter(this.filtros);
+                  })
+
+                  this.profesorService.listar().subscribe(p=>{
+                    console.log(p);
+                    this.profesores = p;
+                    console.log(this.profesores);
+                       // this.asignaturaService = t.filter(this.filtros);
+                  })
+                }
 
   ngOnInit() {
+
   }
 
   async opciones(asignatura) {
@@ -44,21 +64,17 @@ export class CrearAsignaturasPage implements OnInit {
         text: 'Ver',
         icon: 'eye',
         handler: () => {
-
+          this.asignatura = asignatura;
+          this.banderaSituacion=3;
         }
       },{
-        text: 'Ver Asignaturas',
+        text: 'Actualizar',
         icon: 'albums',
         handler: () => {
-
+          this.asignatura = asignatura;
+          this.banderaSituacion=2;
         }
       },{
-        text: 'Modificar Asignatura',
-        icon: 'people',
-        handler: () => {
-
-        }
-      }, {
         text: 'Desactivar',
         role: 'Desactivar',
         icon: 'trash',
@@ -76,4 +92,30 @@ export class CrearAsignaturasPage implements OnInit {
     });
     await actionSheet.present();
   }
+
+  public guardarAsignatura(){
+
+    this.asignatura.id = 0 + (this.asignaturas.length + 1);
+    this.asignaturaService.insertar(this.asignatura).subscribe(asignatura=>{
+      //console.log('entra2');
+      this.ngOnInit();
+      this.asignatura = {id:0,estado:false,codigo:'',nivel:0,nombre:'',profesor:'',tareas:[]};
+    })
+  }
+
+  public actualizarAsignatura(){
+    console.log('vamos a actualizar a este asignatura',this.asignatura);
+
+    this.asignaturaService.actualizar(this.asignatura.id,this.asignatura).subscribe(asignatura=>{
+      //console.log(cliente);
+      this.ngOnInit();
+      this.asignatura = {id:0,estado:false,codigo:'',nivel:0,nombre:'',profesor:'',tareas:[]};
+    })
+  }
+
+  limpiarDatos(){
+    this.ngOnInit();
+    this.asignatura = {id:0,estado:false,codigo:'',nivel:0,nombre:'',profesor:'',tareas:[]};
+  }
+
 }

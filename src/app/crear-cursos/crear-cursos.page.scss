@@ -25,6 +25,15 @@ ion-badge{
   margin: 2%;
 }
 
+.titulo-ver{
+  font-size: 14px;
+}
+
+.titulo-ver-lista{
+  font-size: 14px;
+  margin-left: 23%;
+}
+
 @keyframes aparecer {
   from{
     transform: translateY(100%);

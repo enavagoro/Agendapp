@@ -54,3 +54,19 @@ ion-avatar{
 .texto-bienvenida{
   font-size: 18px;
 }
+
+p{
+  width: 80%;
+  margin-left: 10%;
+}
+
+.ion-button{
+  --background: #7e7cc1;
+  --background-activated: #7e7cc1;
+  --background-focused: #7e7cc1;
+  --background-hover: #7e7cc1;
+  width: 70% !important;
+  margin-left: 15% !important;
+  margin-top: 5%;
+  margin-bottom: 2%;
+}

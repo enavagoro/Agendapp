@@ -8,6 +8,19 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
+// Servicios
+
+import { AlumnoService } from './_servicios/alumno.service';
+import { ApoderadoService } from './_servicios/apoderado.service';
+import { AsignaturaService } from './_servicios/asignatura.service';
+import { CursoService } from './_servicios/curso.service';
+import { NivelService } from './_servicios/nivel.service';
+import { ProfesorService } from './_servicios/profesor.service';
+import { ReunionService } from './_servicios/reunion.service';
+import { CitacionService } from './_servicios/citacion.service';
+import { TareaService } from './_servicios/tarea.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,11 +28,21 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    AlumnoService,
+    ApoderadoService,
+    AsignaturaService,
+    CursoService,
+    NivelService,
+    ProfesorService,
+    ReunionService,
+    CitacionService,
+    TareaService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

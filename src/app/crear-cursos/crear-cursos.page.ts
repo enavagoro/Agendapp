@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController ,ToastController,AlertController,ActionSheetController} from '@ionic/angular';
+import { CursoService } from '../_servicios/curso.service';
+import { NivelService } from '../_servicios/nivel.service';
+import { AsignaturaService } from '../_servicios/asignatura.service';
+import { AlumnoService } from '../_servicios/alumno.service';
 
 @Component({
   selector: 'app-crear-cursos',
@@ -7,7 +11,7 @@ import { ModalController ,ToastController,AlertController,ActionSheetController}
   styleUrls: ['./crear-cursos.page.scss'],
 })
 export class CrearCursosPage implements OnInit {
-
+  banderaSituacion = 0;
   /*
   Curso{
     id: //id interno para la base de datos
@@ -20,28 +24,47 @@ export class CrearCursosPage implements OnInit {
   */
   nivel = 1;
   curso = {
-            "id":"0","cod_curso":"0","estado":"0","nivel":"0","asignaturas":["Million tonne punch","Damage resistance","Superhuman reflexes"],"alumnos":["Million tonne punch","Damage resistance","Superhuman reflexes"]
+            id:0,codigo:'',nombre:'',estado:false,nivel:0,asignaturas:[],alumnos:[]
           };
 
-  cursos = [{
-            "nombre":"Primero-A","id":"0","cod_curso":"0","estado":"0","nivel":"1","asignaturas":["Million tonne punch","Damage resistance","Superhuman reflexes"],"alumnos":["Million tonne punch","Damage resistance","Superhuman reflexes"]
-            },
-            {
-              "nombre":"Segundo-B","id":"0","cod_curso":"0","estado":"0","nivel":"2","asignaturas":["Million tonne punch","Damage resistance","Superhuman reflexes"],"alumnos":["Million tonne punch","Damage resistance","Superhuman reflexes"]
-            },
-            {
-              "nombre":"Tercero-C","id":"0","cod_curso":"0","estado":"0","nivel":"3","asignaturas":["Million tonne punch","Damage resistance","Superhuman reflexes"],"alumnos":["Million tonne punch","Damage resistance","Superhuman reflexes"]
-            }
-           ];
-
-  banderaSituacion = 0;
+  cursos = [];
+  niveles = [];
+  alumnos = [];
+  asignaturas = [];
 
   constructor( private toastController : ToastController,
                private alertController :AlertController,
                private modalCtrl : ModalController,
-               public actionSheetController: ActionSheetController,) {
-    console.log(this.curso);
-    console.log(this.cursos);
+               public actionSheetController: ActionSheetController,
+               public cursoService : CursoService,
+               private nivelService : NivelService,
+               private asignaturaService : AsignaturaService,
+               private alumnoService: AlumnoService) {
+
+                 this.cursoService.listar().subscribe(c=>{
+                   this.cursos = c;
+                   console.log(this.cursos);
+                      // this.alumnoService = t.filter(this.filtros);
+                 })
+
+                 this.nivelService.listar().subscribe(n=>{
+                    this.niveles = n;
+                    console.log(this.niveles);
+                      // this.nivelService = t.filter(this.filtros);
+                 })
+
+                 this.alumnoService.listar().subscribe(a=>{
+                   this.alumnos = a;
+                   console.log(this.alumnos);
+                      // this.alumnoService = t.filter(this.filtros);
+                 })
+
+                 this.asignaturaService.listar().subscribe(a=>{
+                   console.log(a);
+                   this.asignaturas = a;
+                   console.log(this.asignaturas);
+                      // this.asignaturaService = t.filter(this.filtros);
+                 })
   }
 
   ngOnInit() {
@@ -55,17 +78,19 @@ export class CrearCursosPage implements OnInit {
         text: 'Ver',
         icon: 'eye',
         handler: () => {
-
+          this.curso = curso;
+          this.banderaSituacion=3;
         }
       },{
-        text: 'Modificar Asignaturas',
+        text: 'Actualizar',
         icon: 'albums',
         handler: () => {
-
+          this.curso = curso;
+          this.banderaSituacion=2;
         }
       },{
         text: 'Agregar Alumno',
-        icon: 'people',
+        icon: 'albums',
         handler: () => {
 
         }
@@ -86,6 +111,31 @@ export class CrearCursosPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  public guardarCurso(){
+
+    this.curso.id = 0 + (this.cursos.length + 1);
+    this.cursoService.insertar(this.curso).subscribe(curso=>{
+      //console.log('entra2');
+      this.ngOnInit();
+      this.curso = {id:0,codigo:'',nombre:'',estado:false,nivel:0,asignaturas:[],alumnos:[]};
+    })
+  }
+
+  public actualizarCurso(){
+    console.log('vamos a actualizar a este alumno',this.curso);
+
+    this.cursoService.actualizar(this.curso.id,this.curso).subscribe(alumno=>{
+      //console.log(cliente);
+      this.ngOnInit();
+      this.curso = {id:0,codigo:'',nombre:'',estado:false,nivel:0,asignaturas:[],alumnos:[]};
+    })
+  }
+
+  limpiarDatos(){
+    this.ngOnInit();
+    this.curso = {id:0,codigo:'',nombre:'',estado:false,nivel:0,asignaturas:[],alumnos:[]};
   }
 
 }

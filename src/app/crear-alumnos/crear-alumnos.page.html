@@ -22,15 +22,7 @@
     </ion-item>
 
     <div style="margin-left:10%; width:80%;">
-      <ion-badge color="tertiary" (click)="nivel=1;">1</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=2;">2</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=3;">3</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=4;">4</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=5;">5</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=6;">6</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=7;">7</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=8;">8</ion-badge>
-      <ion-badge color="tertiary" (click)="nivel=9;">9</ion-badge>
+      <ion-badge color="tertiary" *ngFor="let n of niveles" (click)="nivel=n.nivel">{{n.nivel}}</ion-badge>
     </div>
 
     <ion-list-header>
@@ -38,7 +30,7 @@
     </ion-list-header>
 
     <div *ngFor="let a of alumnos">
-      <ion-item *ngIf="a.nivel==nivel" (click)="opciones()">
+      <ion-item *ngIf="a.nivel==nivel" (click)="opciones(a)">
         <ion-avatar slot="start">
           <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
         </ion-avatar>
@@ -50,7 +42,7 @@
   <div class="contenedor-form" *ngIf="banderaSituacion==1">
 
     <ion-buttons style="padding-top:8%;">
-      <ion-button (click)="banderaSituacion=0">
+      <ion-button (click)="banderaSituacion=0;limpiarDatos()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -67,7 +59,7 @@
             <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
           </ion-avatar>
           <ion-label position="stacked">Nombre del Alumno<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input name="nombre" required></ion-input>
+          <ion-input [(ngModel)]="alumno.nombre" name="nombre" required></ion-input>
         </ion-item>
 
         <ion-item>
@@ -75,7 +67,7 @@
             <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
           </ion-avatar>
           <ion-label position="stacked">Rut<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input name="nombre" required></ion-input>
+          <ion-input [(ngModel)]="alumno.rut" name="rut" required></ion-input>
         </ion-item>
 
         <ion-item>
@@ -83,8 +75,10 @@
             <img src="https://image.flaticon.com/icons/svg/610/610527.svg">
           </ion-avatar>
           <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
-        <ion-input name="nombre" required></ion-input>
-      </ion-item>
+          <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="alumno.nivel">
+            <ion-select-option [value]="n.nivel" *ngFor="let n of niveles">{{n.nivel}}</ion-select-option>
+          </ion-select>
+        </ion-item>
 
       <ion-list-header>
         Datos de la cuenta
@@ -95,7 +89,7 @@
           <img src="https://image.flaticon.com/icons/svg/3154/3154231.svg">
         </ion-avatar>
         <ion-label position="stacked">Usuario<ion-text color="danger">*</ion-text></ion-label>
-        <ion-input name="nombre" required></ion-input>
+        <ion-input name="pausa" required></ion-input>
       </ion-item>
 
       <ion-item>
@@ -145,7 +139,215 @@
   <!--[(ngModel)]="cliente.nombre" -->
 
       <div style="background:white;">
-        <ion-button class="ion-button">Agregar Alumno</ion-button>
+        <ion-button class="ion-button" (click)="guardarAlumno();">Agregar Alumno</ion-button>
+      </div>
+     </form>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==2">
+
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0; limpiarDatos()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:1%;">Actualizar Alumno</h1>
+
+        <ion-list-header>
+          Datos del Alumno
+        </ion-list-header>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+          </ion-avatar>
+          <ion-label position="stacked">Nombre del Alumno<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input [(ngModel)]="alumno.nombre" name="nombre" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+          </ion-avatar>
+          <ion-label position="stacked">Rut<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input [(ngModel)]="alumno.rut" name="rut" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/610/610527.svg">
+          </ion-avatar>
+          <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
+          <ion-select cancelText="Cancelar" okText="Aceptar" name="nivel" [(ngModel)]="alumno.nivel">
+            <ion-select-option [value]="n.nivel" *ngFor="let n of niveles">{{n.nivel}}</ion-select-option>
+          </ion-select>
+      </ion-item>
+
+      <ion-list-header>
+        Datos de la cuenta
+      </ion-list-header>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3154/3154231.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Usuario<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="pausa" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3076/3076255.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Contraseña<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" type="password" required></ion-input>
+      </ion-item>
+
+      <ion-list-header>
+        Datos del Apoderado
+      </ion-list-header>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Rut<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/1251/1251457.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Nombre del Apoderado<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3003/3003732.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Dirección<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/2920/2920369.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Celular<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+  <!--[(ngModel)]="cliente.nombre" -->
+
+      <div style="background:white;">
+        <ion-button class="ion-button" (click)="actualizarAlumno();">Agregar Alumno</ion-button>
+      </div>
+     </form>
+  </div>
+
+  <div class="contenedor-form" *ngIf="banderaSituacion==3">
+
+    <ion-buttons style="padding-top:8%;">
+      <ion-button (click)="banderaSituacion=0;limpiarDatos()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <form>
+      <h1 class="titulo-bienvenido" style="margin-bottom:1%;">Ver Alumno</h1>
+
+        <ion-list-header>
+          Datos del Alumno
+        </ion-list-header>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/779/779856.svg">
+          </ion-avatar>
+          <ion-label position="stacked">Nombre<ion-text color="danger">*</ion-text></ion-label>
+          <h1 class="titulo-ver">{{alumno.nombre}}</h1>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+          </ion-avatar>
+          <ion-label position="stacked">Rut<ion-text color="danger">*</ion-text></ion-label>
+          <h1 class="titulo-ver">{{alumno.rut}}</h1>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="https://image.flaticon.com/icons/svg/610/610527.svg">
+          </ion-avatar>
+          <ion-label position="stacked">Nivel<ion-text color="danger">*</ion-text></ion-label>
+          <h1 class="titulo-ver">{{alumno.nivel}}</h1>
+      </ion-item>
+
+      <ion-list-header>
+        Datos de la cuenta
+      </ion-list-header>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3154/3154231.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Usuario<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="pausa" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3076/3076255.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Contraseña<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" type="password" required></ion-input>
+      </ion-item>
+
+      <ion-list-header>
+        Datos del Apoderado
+      </ion-list-header>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3142/3142853.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Rut<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/1251/1251457.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Nombre del Apoderado<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/3003/3003732.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Dirección<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://image.flaticon.com/icons/svg/2920/2920369.svg">
+        </ion-avatar>
+        <ion-label position="stacked">Celular<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input name="nombre" required></ion-input>
+      </ion-item>
+
+  <!--[(ngModel)]="cliente.nombre" -->
+
+      <div style="background:white;">
+        <ion-button class="ion-button" (click)="guardarAlumno();">Agregar Alumno</ion-button>
       </div>
      </form>
   </div>
